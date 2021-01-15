@@ -1,0 +1,202 @@
+/* -------------
+      Base
+  -------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: helvetica, arial, sans-serif;
+  background-color: #151515;
+  color: #e1e1e1;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-bottom: 40px;
+}
+
+button {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+button:hover {
+
+}
+
+button:disabled {
+  box-shadow: none;
+  background-color: #6e6e6e;
+  cursor: not-allowed;
+}
+
+.hidden {
+  display: none;
+}
+
+.small {
+  font-size: 80%;
+}
+
+.icon {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.icon-vk {
+  background-image: url('vk.svg');
+}
+
+.icon-discord {
+  background-image: url('discord.svg');
+}
+
+/* -------------
+      HEADER
+  -------------- */
+
+.banner-container {
+  height: 160px;
+  display: flex;
+}
+
+.banner-logo {
+  height: 100%;
+  margin: 0 auto;
+}
+
+.external-links {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.external-links div {
+  display: flex;
+  align-items: center;
+}
+
+.external-links a {
+  display: inline-block;
+  color: #fff;
+  text-decoration: underline;
+}
+
+.external-links a:hover {
+  color: #69bd5c;
+}
+
+.external-links a + a {
+  margin-left: 12px;
+}
+
+/* -------------
+      Footer
+  -------------- */
+
+.footer-group {
+  display: flex;
+  align-items: flex-end;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: auto;
+}
+
+.game-versions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.game-versions.latest p:last-child {
+  display: none;
+}
+
+.game-versions strong {
+  font-weight: bold;
+  font-size: 120%;
+  color: orange;
+}
+
+.game-status {
+  flex-grow: 1;
+}
+
+.action-button {
+  margin-left: 40px;
+}
+
+.action-button button {
+  min-width: 120px;
+  height: 50px;
+}
+
+.action-button button + button {
+  margin-left: 16px;
+}
+
+.btn-update {
+  background-color: #8e9019;
+  color: #efefef;
+}
+
+.btn-update:hover:not[disabled="disabled"] {
+  background-color: #929405;
+}
+
+.btn-game {
+  background-color: #117917;
+  color: #efefef;
+}
+
+.btn-game:hover:not[disabled="disabled"] {
+  background-color: #007b07;
+}
+
+.btn-editor {
+  background-color: #0a7b6c;
+  color: #efefef;
+}
+
+.btn-editor:hover:not[disabled="disabled"] {
+  background-color: #048c7a;
+}
+
+.progress {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  flex-grow: 1;
+  background-color: #6e6e6e;
+}
+
+.progress-data,
+.progress-value {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.progress-data {
+  background-color: #4caf50;
+}
+
+.progress-value {
+  text-align: center;
+  color: #e1e1e1;
+}
+
+.footer-note {
+  padding-top: 30px;
+  padding-left: 20px;
+}

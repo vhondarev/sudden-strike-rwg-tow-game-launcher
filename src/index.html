@@ -1,0 +1,56 @@
+<! DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>RWG-TOW Launcher</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <div class='banner-container'>
+        <img class='banner-logo' src="assets/banner.png" alt="banner logo">
+      </div>
+      <div class='external-links'>
+        <div>
+          <a href="http://www.realwargame.ru/forum/index.php">Форум</a>
+          <a href="http://www.realwargame.ru/forum/viewforum.php?f=27&sid=d9b8c1328be6683b7e3b8fda65bae749">Eng Forum</a>
+          <a href="https://www.sudden-strike-maps.de/phpBB2/viewforum.php?f=158">Ger Forum</a>
+          <a href="http://forum.sudden-strike-alliance.fr/annonce-de-la-rwg-team-truth-of-war-0-9-t3020.html">Fra Forum</a>
+        </div>
+        <div class='social-links'>
+          <a href="https://vk.com/realwargame">
+            <span class="icon icon-vk"></span>
+          </a>
+          <a href="https://discord.gg/gzh2Jrh">
+            <span class="icon icon-discord"></span>
+          </a>
+        </div>
+      </div>
+    </header>
+    <div class="footer-group">
+      <div class='game-status'>
+        <div class="game-versions latest">
+          <p>Текущая версия игры <strong id='game-version'></strong></p>
+          <p>Доступна версия игры <strong id='avaliable-game-version'></strong></p>
+        </div>
+        <div class="progress">
+          <div class="progress-data" id="progress-data" style="width: 0%"></div>
+          <div class='progress-value' id='progress-value'></div>
+        </div>
+      </div>
+      <div class="action-button">
+        <button type="button" class="btn-update hidden" id="update-game">Обновить</button>
+        <button type="button" class="btn-editor hidden" id="run-editor">Запустить редактор</button>
+        <button type="button" class="btn-game" id="run-game" disabled>Играть</button>
+      </div>
+    </div>
+    <div class='footer-note small'>
+      Патчи качаются и устанавливаются поочередности
+    </div>
+  </main>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
