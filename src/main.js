@@ -88,9 +88,8 @@ ipcMain.on(CHANNEL_DOWNLOAD_UPDATE, async (event, arg) => {
   }
 
   const runExeCallback = (filePath) => {
-    fwin.setProgressBar(-1, { mode: "none" });
+    fwin.setProgressBar(-1, { mode: "none" })
     event.reply(CHANNEL_REPLY_RUN_GAME_UPDATE_EXE, 'start')
-
     runUpdateExe(filePath, () => event.reply(CHANNEL_REPLY_RUN_GAME_UPDATE_EXE, 'end'))
   }
 

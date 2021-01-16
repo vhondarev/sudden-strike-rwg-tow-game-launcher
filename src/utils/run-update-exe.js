@@ -1,6 +1,12 @@
 const Shell = require('node-powershell')
 const path = require('path')
 
+/**
+ *
+ * @param filePath {string}
+ * @param callback
+ */
+
 function runUpdateExe(filePath, callback) {
   const ps = new Shell({
     executionPolicy: 'Bypass',

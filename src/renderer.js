@@ -58,7 +58,7 @@ const elBtnUpdateGame = getElById('update-game')
 const elProgressBar = getElById('progress-data')
 const elProgressValue = getElById('progress-value')
 const elVersionText = getElById('game-version')
-const elAvaliableVersionText = getElById('avaliable-game-version')
+const elAvailableVersionText = getElById('available-game-version')
 const elVersionBlock = window.document.querySelector('.game-versions')
 
 function updateProgressBar(value) {
@@ -81,7 +81,7 @@ ipcRenderer.on(CHANNEL_REPLY_GET_REMOTE_DATA, (event, arg) => {
   localStateData.latestPatch = latestPatch
   localStateData.loadProgress.remote = true
 
-  elAvaliableVersionText.innerHTML = latestPatch
+  elAvailableVersionText.innerHTML = latestPatch
 
   checkIfNeedToUpdateBtn();
 })

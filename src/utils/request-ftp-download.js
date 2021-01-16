@@ -2,9 +2,14 @@ const fs = require('fs')
 const path = require('path')
 const FtpClient = require('ftp')
 
-module.exports = function requestFtpDownload(url, progressCallback, callback) {
-  // TODO check if file already uploaded
+/**
+ *
+ * @param url {string}
+ * @param progressCallback
+ * @param callback
+ */
 
+function requestFtpDownload(url, progressCallback, callback) {
   const { username, password, host, pathname } = new URL(url)
   const PATH_TO_FILE = `${process.env.USERPROFILE}\\Downloads\\${path.basename(pathname)}`
 
@@ -35,3 +40,5 @@ module.exports = function requestFtpDownload(url, progressCallback, callback) {
 
   ftp.connect({ host: host, user: username, password: password })
 }
+
+module.exports = requestFtpDownload
