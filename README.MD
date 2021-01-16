@@ -1,4 +1,8 @@
-# Sudden Strike - RWG TOW Game Launcher
+# Sudden Strike 2 - RWG TOW Game Launcher
+
+## Join our Sudden Strike community in discord - [https://discord.gg/wRTP4dmu](https://discord.gg/wRTP4dmu)
+
+---
 
 ***Note*** Launcher developed only for Windows OS
 
@@ -9,14 +13,17 @@
 
 
 ### Build
-1. To build launcher for x64 system run `npm run make`
-2. To build launcher for x32 system run `npm run make32` (works for both systems)
+1. To build for x32 system run `npm run build32` (also works for x64)
+2. To build for x64 system run `npm run build64`
 
 
 ### TODO
-1. Investigate correct way of updating electron app
-2. Resolve all TODO
-3. Improve error handling
-4. Improve performance 
-5. Improve static structure and views editing
-6. Add multilanguage support
+1. Setup bundle process and optimize build
+2. Investigate correct way of updating electron app
+3. Resolve all TODO
+4. Improve error handling
+5. Improve performance 
+6. Improve static structure and views editing
+7. Add multilanguage support
+8. Add ServiceWorker for push notification
+9. Add JsDocs and comments to code base

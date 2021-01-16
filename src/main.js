@@ -9,7 +9,10 @@ const calcDownloadProgress = require('./utils/upload-progress')
 const requestFtpDownload = require('./utils/request-ftp-download')
 const runExeFile = require('./utils/run-game-file-exe')
 
-const { VERSIONS_URL, IPC_CHANNELS } = require('./constants')
+const {
+  VERSIONS_URL,
+  IPC_CHANNELS,
+} = require('./constants')
 
 const {
   CHANNEL_GET_REMOTE_DATA,
@@ -40,7 +43,6 @@ function createWindow () {
   win.loadFile( __dirname + '\\index.html')
 
   // open chrome devTools
-  // comment on build
   // win.webContents.openDevTools()
 }
 

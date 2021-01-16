@@ -2,58 +2,6 @@ const { ipcRenderer, shell } = require('electron')
 
 const { IPC_CHANNELS } = require('./constants')
 
-// Local mutable state
-window.loadProgress = {
-  local: false,
-  remote: false,
-}
-
-window.data = {
-  latestPatch: null,
-  currentPatch: null,
-  registry: {},
-  patches: {},
-}
-
-const userLanguage = window.navigator.language
-
-// console.log('userLanguage', userLanguage)
-
-const externalLinks = window.document.querySelectorAll('.external-links a');
-externalLinks.forEach((el) => {
-  el.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (e.target.nodeName !== 'A') {
-      return shell.openExternal(e.target.closest('a').href)
-    }
-
-    return shell.openExternal(e.target.href)
-  })
-})
-
-function getElById(name) {
-  return window.document.getElementById(name);
-}
-
-const elBtnRunGame = getElById('run-game')
-const elBtnRunEditor = getElById('run-editor')
-const elBtnUpdateGame = getElById('update-game')
-const elProgressBar = getElById('progress-data')
-const elProgressValue = getElById('progress-value')
-const elVersionText = getElById('game-version')
-const elAvaliableVersionText = getElById('avaliable-game-version')
-const elVersionBlock = window.document.querySelector('.game-versions')
-
-function updateProgressBar(value) {
-  if (value === 0) {
-    elProgressValue.innerHTML = '';
-  } else {
-    elProgressValue.innerHTML = value + '%'
-  }
-
-  elProgressBar.style.width = value + '%'
-}
-
 const {
   CHANNEL_GET_REMOTE_DATA,
   CHANNEL_REPLY_GET_REMOTE_DATA,
@@ -69,29 +17,73 @@ const {
   CHANNEL_REPLY_DOWNLOAD_UPDATE,
 } = IPC_CHANNELS;
 
-let SYNC_UPDATE = false
+// Local mutable state
+window.localStateData = {
+  loadProgress: {
+    local: false,
+    remote: false,
+  },
+  latestPatch: null,
+  currentPatch: null,
+  registry: {},
+  patches: {},
+}
+
+const localStateData = window.localStateData
+
+// const userLanguage = window.navigator.language
+// console.log('userLanguage', userLanguage)
+
+// open external links in default browser instead electron app
+const externalLinks = window.document.querySelectorAll('.external-links a');
+externalLinks.forEach((el) => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    if (e.target.nodeName !== 'A') {
+      return shell.openExternal(e.target.closest('a').href)
+    }
+
+    return shell.openExternal(e.target.href)
+  })
+})
+
+function getElById(name) {
+  return window.document.getElementById(name)
+}
+
+const elBtnRunGame = getElById('run-game')
+const elBtnRunEditor = getElById('run-editor')
+const elBtnUpdateGame = getElById('update-game')
+const elProgressBar = getElById('progress-data')
+const elProgressValue = getElById('progress-value')
+const elVersionText = getElById('game-version')
+const elAvaliableVersionText = getElById('avaliable-game-version')
+const elVersionBlock = window.document.querySelector('.game-versions')
+
+function updateProgressBar(value) {
+  if (value === 0) {
+    elProgressValue.innerHTML = ''
+  } else {
+    elProgressValue.innerHTML = value + '%'
+  }
+
+  elProgressBar.style.width = value + '%'
+}
+
 
 // fetch remote version
 ipcRenderer.send(CHANNEL_GET_REMOTE_DATA, 'get-version')
 ipcRenderer.on(CHANNEL_REPLY_GET_REMOTE_DATA, (event, arg) => {
   const latestPatch = Math.max(...Object.keys(arg.patches))
 
-  window.data.patches = arg.patches
-  window.data.latestPatch = latestPatch
-  window.loadProgress.remote = true
+  localStateData.patches = arg.patches
+  localStateData.latestPatch = latestPatch
+  localStateData.loadProgress.remote = true
 
   elAvaliableVersionText.innerHTML = latestPatch
 
   checkIfNeedToUpdateBtn();
-
-  if (SYNC_UPDATE) {
-    SYNC_UPDATE = false
-    ipcRenderer.send(CHANNEL_DOWNLOAD_UPDATE, {
-      installDir: window.data.registry.InstallDir.value,
-      currentPatch: window.data.currentPatch,
-      patches: window.data.patches,
-    })
-  }
 })
 
 // Get game version with regedit
@@ -99,9 +91,9 @@ ipcRenderer.send(CHANNEL_GET_REGISTRY_DATA, 'get-local-version')
 ipcRenderer.on(CHANNEL_REPLY_GET_REGISTRY_DATA, (event, arg) => {
   const currentPatch = Object.values(arg)[0].values.Version.value
 
-  window.data.registry = Object.values(arg)[0].values
-  window.data.currentPatch = currentPatch
-  window.loadProgress.local = true
+  localStateData.registry = Object.values(arg)[0].values
+  localStateData.currentPatch = currentPatch
+  localStateData.loadProgress.local = true
 
   elVersionText.innerHTML = currentPatch
 
@@ -120,7 +112,7 @@ ipcRenderer.on(CHANNEL_REPLY_RUN_GAME_UPDATE_EXE, (event, arg) => {
 
     case 'end':
       console.log('UPDATING REGEDIT')
-      window.loadProgress.local = false
+      localStateData.loadProgress.local = false
       updateProgressBar(0)
       ipcRenderer.send(CHANNEL_GET_REGISTRY_DATA, 'get-local-version')
       return
@@ -137,9 +129,9 @@ elBtnUpdateGame.addEventListener('click', () => {
   elBtnRunGame.disabled = true
 
   ipcRenderer.send(CHANNEL_DOWNLOAD_UPDATE, {
-    installDir: window.data.registry.InstallDir.value,
-    currentPatch: window.data.currentPatch,
-    patches: window.data.patches,
+    installDir: localStateData.registry.InstallDir.value,
+    currentPatch: localStateData.currentPatch,
+    patches: localStateData.patches,
   })
 
   ipcRenderer.on(CHANNEL_REPLY_DOWNLOAD_UPDATE, (event, arg) => {
@@ -149,7 +141,7 @@ elBtnUpdateGame.addEventListener('click', () => {
 
 // Start game
 elBtnRunGame.addEventListener('click', () => {
-  ipcRenderer.send(CHANNEL_RUN_GAME_EXE, window.data.registry.InstallDir.value)
+  ipcRenderer.send(CHANNEL_RUN_GAME_EXE, localStateData.registry.InstallDir.value)
   ipcRenderer.on(CHANNEL_REPLY_RUN_GAME_EXE, (event, arg) => {
     console.log(arg)
   })
@@ -157,18 +149,18 @@ elBtnRunGame.addEventListener('click', () => {
 
 // Start editor
 elBtnRunEditor.addEventListener('click', () => {
-  ipcRenderer.send(CHANNEL_RUN_EDITOR_EXE, window.data.registry.InstallDir.value)
+  ipcRenderer.send(CHANNEL_RUN_EDITOR_EXE, localStateData.registry.InstallDir.value)
   ipcRenderer.on(CHANNEL_REPLY_RUN_EDITOR_EXE, (event, arg) => {
     console.log(arg)
   })
 })
 
 function checkIfNeedToUpdateBtn() {
-  if(window.loadProgress.local && window.loadProgress.remote) {
+  if(localStateData.loadProgress.local && localStateData.loadProgress.remote) {
     elBtnRunGame.disabled = false
     elBtnUpdateGame.disabled = false
 
-    if (Number(window.data.latestPatch) === Number(window.data.currentPatch)) {
+    if (Number(localStateData.latestPatch) === Number(localStateData.currentPatch)) {
       elBtnUpdateGame.classList.add('hidden')
       elVersionBlock.classList.add('latest')
     } else {

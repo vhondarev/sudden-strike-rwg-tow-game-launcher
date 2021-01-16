@@ -19,7 +19,6 @@ function runUpdateExe(filePath, callback) {
       const interval = setInterval(() => {
         checkIfProcessAlive()
           .then((data) => {
-            // console.log(data)
             if (data === undefined) {
               clearInterval(interval);
               callback()
@@ -29,7 +28,7 @@ function runUpdateExe(filePath, callback) {
           .catch((err) => {
             clearInterval(interval)
             callback()
-            console.error('Catch promise error, interval rejected', err.name)
+            console.error('Promise interval rejected', err.name)
           })
       }, period)
     })
