@@ -48,9 +48,10 @@ function updateProgressBar(value) {
   if (value === 0) {
     elProgressValue.innerHTML = '';
   } else {
-    elProgressValue.innerHTML = value + '%';
+    elProgressValue.innerHTML = value + '%'
   }
-  elProgressBar.style.width = value + '%';
+
+  elProgressBar.style.width = value + '%'
 }
 
 const {
@@ -104,7 +105,7 @@ ipcRenderer.on(CHANNEL_REPLY_GET_REGISTRY_DATA, (event, arg) => {
 
   elVersionText.innerHTML = currentPatch
 
-  checkIfNeedToUpdateBtn();
+  checkIfNeedToUpdateBtn()
 
   console.log('REGISTRY IS UPDATED')
 })
@@ -122,10 +123,10 @@ ipcRenderer.on(CHANNEL_REPLY_RUN_GAME_UPDATE_EXE, (event, arg) => {
       window.loadProgress.local = false
       updateProgressBar(0)
       ipcRenderer.send(CHANNEL_GET_REGISTRY_DATA, 'get-local-version')
-      return;
+      return
 
     default:
-      return;
+      return
 
   }
 })
@@ -168,11 +169,11 @@ function checkIfNeedToUpdateBtn() {
     elBtnUpdateGame.disabled = false
 
     if (Number(window.data.latestPatch) === Number(window.data.currentPatch)) {
-      elBtnUpdateGame.classList.add('hidden');
+      elBtnUpdateGame.classList.add('hidden')
       elVersionBlock.classList.add('latest')
     } else {
       elVersionBlock.classList.remove('latest')
-      elBtnUpdateGame.classList.remove('hidden');
+      elBtnUpdateGame.classList.remove('hidden')
     }
   }
 }

@@ -1,4 +1,4 @@
-const VERSIONS_URL = 'http://realwargame.ru/download/version.json';
+const VERSIONS_URL = 'http://realwargame.ru/download/version.json'
 
 const IPC_CHANNELS = {
   CHANNEL_GET_REMOTE_DATA: 'CHANNEL_GET_REMOTE_DATA',

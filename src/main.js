@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain, net  } = require('electron')
 const fs = require('fs')
 const path = require('path')
 const regedit = require('regedit')
+
 const axios = require('./utils/request')
 const runUpdateExe = require('./utils/run-update-exe.js')
 const calcDownloadProgress = require('./utils/upload-progress')
@@ -23,7 +24,7 @@ const {
   CHANNEL_REPLY_RUN_EDITOR_EXE,
   CHANNEL_DOWNLOAD_UPDATE,
   CHANNEL_REPLY_DOWNLOAD_UPDATE,
-} = IPC_CHANNELS;
+} = IPC_CHANNELS
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -64,7 +65,7 @@ ipcMain.on(CHANNEL_GET_REGISTRY_DATA, (event, arg) => {
 
 // Download update
 ipcMain.on(CHANNEL_DOWNLOAD_UPDATE, async (event, arg) => {
-  const fwin = BrowserWindow.getFocusedWindow();
+  const fwin = BrowserWindow.getFocusedWindow()
 
   // workaround for 0.90 { ... }
   const avaliablePatches = {
@@ -75,7 +76,7 @@ ipcMain.on(CHANNEL_DOWNLOAD_UPDATE, async (event, arg) => {
       }
     },
     ...arg.patches,
-  };
+  }
 
   // get next version and then resource patch link of upcoming update
   const resourcePath = avaliablePatches[avaliablePatches[arg.currentPatch].next]?.resources?.ftp
@@ -94,7 +95,7 @@ ipcMain.on(CHANNEL_DOWNLOAD_UPDATE, async (event, arg) => {
   fwin.setProgressBar(0.5, { mode: "indeterminate" });
 
   const {pathname} = new URL(resourcePath);
-  const PATH_TO_FILE = `${process.env.USERPROFILE}\\Downloads\\${path.basename(pathname)}`;
+  const PATH_TO_FILE = `${process.env.USERPROFILE}\\Downloads\\${path.basename(pathname)}`
 
   if (fs.existsSync(PATH_TO_FILE)) {
     return runExeCallback(PATH_TO_FILE)
@@ -106,9 +107,8 @@ ipcMain.on(CHANNEL_DOWNLOAD_UPDATE, async (event, arg) => {
 // Start game
 ipcMain.on(CHANNEL_RUN_GAME_EXE, (event, arg) => {
   const GAME_EXE_PATH = '\\Dat\\Release\\rwg-tow.exe'
-  const FOLDER_PATH = arg;
 
-  runExeFile(event, arg, CHANNEL_REPLY_RUN_GAME_EXE, 'game is running', GAME_EXE_PATH, FOLDER_PATH)
+  runExeFile(event, arg, CHANNEL_REPLY_RUN_GAME_EXE, 'game is running', GAME_EXE_PATH, arg)
 })
 
 // Start editor

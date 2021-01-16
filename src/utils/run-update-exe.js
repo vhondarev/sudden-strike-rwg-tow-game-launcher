@@ -1,7 +1,7 @@
-const Shell = require('node-powershell');
+const Shell = require('node-powershell')
 const path = require('path')
 
-module.exports = function runUpdateExe(filePath, callback) {
+function runUpdateExe(filePath, callback) {
   const ps = new Shell({
     executionPolicy: 'Bypass',
     noProfile: true
@@ -23,17 +23,17 @@ module.exports = function runUpdateExe(filePath, callback) {
             if (data === undefined) {
               clearInterval(interval);
               callback()
-              resolve('finished');
+              resolve('finished')
             }
           })
           .catch((err) => {
-            clearInterval(interval);
+            clearInterval(interval)
             callback()
             console.error('Catch promise error, interval rejected', err.name)
-          });
-      }, period);
-    });
-  };
+          })
+      }, period)
+    })
+  }
 
   ps.invoke()
     .then((output) => {
@@ -44,3 +44,5 @@ module.exports = function runUpdateExe(filePath, callback) {
       callback()
     });
 }
+
+module.exports = runUpdateExe
