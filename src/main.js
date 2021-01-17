@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require('electron')
 const initIpcMainListeners = require('./main-process/ipc-main-listeners')
+const getVpnIp = require('./main-process/get-vpn-ip')
 
 
 function createWindow () {
@@ -35,3 +36,6 @@ app.on('activate', () => {
 })
 
 initIpcMainListeners();
+
+// TODO render IP address on ui
+console.log(getVpnIp());

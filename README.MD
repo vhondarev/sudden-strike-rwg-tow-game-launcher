@@ -1,9 +1,5 @@
 # Sudden Strike 2 - RWG TOW Game Launcher
 
-## Join our Sudden Strike community in discord - [https://discord.gg/wRTP4dmu](https://discord.gg/wRTP4dmu)
-
----
-
 ***Note*** Launcher developed only for Windows OS
 
 ### Install
@@ -22,7 +18,7 @@
 2. Investigate correct way of updating electron app
 3. Resolve all TODO
 4. Improve error handling
-5. Improve performance 
+5. Improve performance
 6. Improve static structure and views editing
 7. Add multilanguage support
 8. Add ServiceWorker for push notification

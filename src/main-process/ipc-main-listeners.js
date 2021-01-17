@@ -48,7 +48,7 @@ function initIpcMainListeners() {
     const fwin = BrowserWindow.getFocusedWindow()
 
     // workaround for 0.90 { ... }
-    const avaliablePatches = {
+    const availablePatches = {
       '0.9': {
         next: "0.91",
         resources: {
@@ -59,7 +59,7 @@ function initIpcMainListeners() {
     }
 
     // get next version and then resource patch link of upcoming update
-    const resourcePath = avaliablePatches[avaliablePatches[arg.currentPatch].next]?.resources?.ftp
+    const resourcePath = availablePatches[availablePatches[arg.currentPatch].next]?.resources?.ftp
 
     const updateUiOnProgress = (gotten, size) => {
       event.reply(CHANNEL_REPLY_DOWNLOAD_UPDATE, calcDownloadProgress(gotten, size))
@@ -97,7 +97,6 @@ function initIpcMainListeners() {
 
     runExeFile(event, arg, CHANNEL_REPLY_RUN_EDITOR_EXE, 'editor is running', EDITOR_EXE_PATH, FOLDER_EXE_PATH)
   })
-
 }
 
 module.exports = initIpcMainListeners
